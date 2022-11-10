@@ -10,12 +10,13 @@
 ApplicationRecord.transaction do
 
     puts 'Destroying tables...'
+    Comment.destroy_all
     ArtworkShare.destroy_all
     Artwork.destroy_all
     User.destroy_all
 
     puts 'Resetting primary keys...'
-    %w(artwork_shares artworks users).each do |table_name|
+    %w(comments artwork_shares artworks users).each do |table_name|
         ApplicationRecord.connection.reset_pk_sequence!(table_name)
     end
 
@@ -44,5 +45,14 @@ ApplicationRecord.transaction do
     ArtworkShare.create!(viewer_id: u4.id, artwork_id: a5.id)
     ArtworkShare.create!(viewer_id: u5.id, artwork_id: a1.id)
     ArtworkShare.create!(viewer_id: u6.id, artwork_id: a3.id)
+
+    Comment.create!(author_id: u1.id, artwork_id: a6.id, body: 'Great job!')
+    Comment.create!(author_id: u2.id, artwork_id: a5.id, body: 'Could have done better...')
+    Comment.create!(author_id: u3.id, artwork_id: a3.id, body: 'This one stinks!')
+    Comment.create!(author_id: u4.id, artwork_id: a4.id, body: 'Amazing!')
+    Comment.create!(author_id: u2.id, artwork_id: a2.id, body: 'Seen it before...')
+    Comment.create!(author_id: u8.id, artwork_id: a2.id, body: 'Wonderful!!!')
+    Comment.create!(author_id: u9.id, artwork_id: a2.id, body: 'Where can i buy the print??')
+    Comment.create!(author_id: u9.id, artwork_id: a1.id, body: 'Cool i guess')
 
 end

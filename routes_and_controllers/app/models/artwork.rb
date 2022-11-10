@@ -29,7 +29,7 @@ class Artwork < ApplicationRecord
 
     has_many :comments,
     foreign_key: :artwork_id,
-    inverse_of: :artwork
+    inverse_of: :artwork,
     class_name: :Comment,
     dependent: :destroy
 end
