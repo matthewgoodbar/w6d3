@@ -1,7 +1,11 @@
 class ArtworksController < ApplicationController
     def show
-        artwork = Artwork.find(params[:id])
-        render json: artwork
+        if artwork = Artwork.find_by(id: params[:id])
+            render json: artwork
+        else
+            render json: "Object was not created", status: 404
+        end
+        
     end
 
     def index
@@ -19,9 +23,19 @@ class ArtworksController < ApplicationController
     end
 
     def update
+        artwork = Artwork.find_by(id: params[:id])
+        if artwork.update(artwork_params)
+            redirect_to artwork_url(artwork.id)
+        else
+            render json: artwork.errors.full_messages, status: :unprocessable_entity
+        end
     end
 
     def destroy
+        artwork = Artwork.find(params[:id])
+        if artwork.destroy
+            render json: artwork
+        end
     end
 
     private
