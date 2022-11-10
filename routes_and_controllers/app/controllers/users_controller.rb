@@ -2,8 +2,14 @@
 
 class UsersController < ApplicationController
     def index
-        users = User.all #referring to the model, not database
-        render json: users
+        if params.has_key?(:username)
+            user = User.where("username LIKE '%#{params[:username]}%'")
+            render json: user
+        else
+            users = User.all #referring to the model, not database
+            render json: users
+        end
+
     end
 
     def create
