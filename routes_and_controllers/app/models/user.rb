@@ -30,4 +30,20 @@ class User < ApplicationRecord
     inverse_of: :author,
     class_name: :Comment,
     dependent: :destroy
+
+    has_many :likes,
+    foreign_key: :liker_id,
+    class_name: :Like,
+    inverse_of: :liker,
+    dependent: :destroy
+
+    has_many :liked_comments,
+    through: :likes,
+    source: :likeable,
+    source_type: :Comment
+
+    has_many :liked_artworks,
+    through: :likes,
+    source: :likeable,
+    source_type: :Artwork
 end

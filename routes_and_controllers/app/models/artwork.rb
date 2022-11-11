@@ -32,4 +32,7 @@ class Artwork < ApplicationRecord
     inverse_of: :artwork,
     class_name: :Comment,
     dependent: :destroy
+
+    has_many :likes,
+    as: :likeable
 end
